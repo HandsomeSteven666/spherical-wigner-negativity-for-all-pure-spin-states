@@ -1,0 +1,411 @@
+% !TeX program = xelatex
+\documentclass[UTF8,11pt,a4paper]{ctexart}
+
+\usepackage[hmargin=28mm,vmargin=24mm]{geometry}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[hidelinks]{hyperref}
+
+\hypersetup{
+  pdftitle={纯自旋态的球面 Wigner 负性},
+  pdfauthor={杨修智},
+  pdfsubject={自旋的球面 Stratonovich--Weyl 对应},
+  pdfkeywords={Wigner 负性, 自旋纯态, 旋转协变性}
+}
+
+\theoremstyle{definition}
+\newtheorem{theorem}{定理}
+\newtheorem{lemma}{引理}
+\renewcommand{\proofname}{证明}
+\DeclareMathOperator{\tr}{tr}
+\newcommand{\SU}{\mathrm{SU}}
+\newcommand{\SO}{\mathrm{SO}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\vn}{\mathbf n}
+\newcommand{\vu}{\mathbf u}
+\setlength{\emergencystretch}{2em}
+\raggedbottom
+\pagestyle{plain}
+
+\title{\textbf{纯自旋态的球面 Wigner 负性}}
+\author{杨修智}
+\date{2026 年 11 月 24 日}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+对任意正整数或半整数自旋，每个归一化纯态的球面 Wigner 函数都在某处取严格负值。
+该结论对自对偶 Stratonovich--Weyl 核的所有符号选择成立。
+由 Gichev 的轨道与超平面相交定理，每个态都能通过自旋旋转变为与自身正交的态。
+利用迹公式和球面 Wigner 函数的实解析性，可以排除原函数处处非负的情形。
+进一步控制球面多项式的对数均值，可得固定自旋下对所有纯态统一成立的显式负性体积下界。
+\end{abstract}
+
+\section{引言}
+
+Stratonovich--Weyl 对应把自旋系统的密度算符表示为球面上的实值准概率函数
+\cite{varilly1989,davis2021}。
+Davis、Hennigar、Mann 和 Ghose 利用一对相互正交且可由旋转联系的相干态，
+通过迹公式证明了任意正自旋的相干态都具有 Wigner 负性 \cite[第 3 节]{davis2023}。
+任意纯态的情形在 Denis 的博士论文中被列为开放问题 \cite[第 3 页]{denis2025}，
+Kam 随后再次陈述了这一猜想 \cite[第 I、VI 节]{kam2026}。
+Open Quantum Problems 目录将此问题编号为 F18 \cite{f18}。
+
+Gichev 关于表示轨道与复超平面相交的结果保证了每个纯态的旋转轨道内都存在与原态正交的态
+\cite[推论 1]{gichev2004}。
+球面 Wigner 函数具有有限的球谐展开。由此得到的实解析性保证两个非恒零的非负符号
+在某个开集上同时严格为正，使相干态的迹论证适用于任意纯态。
+进一步估计两个旋转相关符号的绝对值乘积，可得到定量下界。
+
+\section{球面 Wigner 对应}
+\label{sec:kernel}
+
+固定 \(j\in\{\tfrac12,1,\tfrac32,\ldots\}\)，置 \(L=2j\)、\(d=L+1\)。
+以 \(U_j\) 表示 \(\SU(2)\) 在 \(\mathcal H_j=\mathbb C^d\) 上的自旋 \(j\)
+幺正不可约表示，记 \(R_g\in\SO(3)\) 为 \(g\in\SU(2)\) 对应的空间旋转。
+令 \(e_m=|j,m\rangle\) 为 \(J_3\) 的标准正交归一本征基，
+其中 \(m\) 从 \(-j\) 到 \(j\) 以 \(1\) 为步长取值。
+记 \(C_{jm,\ell q}^{jm'}\) 为该基下的 Clebsch--Gordan 系数。
+
+选定符号 \(\varepsilon_0=1\)，且对 \(1\leq\ell\leq L\) 有
+\(\varepsilon_\ell\in\{-1,1\}\)。以 \(\mathbf e_z\) 为北极，定义
+\begin{align}
+  \Delta_j(\mathbf e_z)
+  &=\sum_{m=-j}^{j}
+    \left(\sum_{\ell=0}^{L}\varepsilon_\ell
+    \frac{2\ell+1}{d}C_{jm,\ell 0}^{jm}\right)e_m e_m^\dagger,
+    \label{eq:kernel-north}\\
+  \Delta_j(R_g\mathbf e_z)
+  &=U_j(g)\Delta_j(\mathbf e_z)U_j(g)^\dagger.
+    \label{eq:kernel-covariance}
+\end{align}
+北极核与固定 \(\mathbf e_z\) 的旋转对易，因此第二式在 \(S^2\) 上给出良定义的厄米核。
+符号全正时，该核与文献 \cite[式 (7)--(11)]{davis2021} 及 F18 \cite{f18}
+所用的核相同。
+
+设 \(\mathrm d\omega\) 为总面积为 \(4\pi\) 的标准球面测度。
+对 \(\mathcal H_j\) 上的算符 \(A\)，定义
+\begin{equation}
+  W_A(\vn)=\tr\bigl(A\Delta_j(\vn)\bigr),\qquad
+  \mathrm d\eta=\frac{\mathrm d\omega}{4\pi},\qquad
+  \mathrm d\mu_j=d\,\mathrm d\eta .
+  \label{eq:measure}
+\end{equation}
+\(W_A\) 是次数至多为 \(L\) 的多项式在 \(S^2\) 上的限制。
+当 \(A\) 为厄米算符时，\(W_A\) 取实值。以下恒等式分别给出协变性、归一化与自对偶迹公式。
+\begin{subequations}\label{eq:identities}
+\begin{align}
+  W_{U_j(g)AU_j(g)^\dagger}(\vn)&=W_A(R_g^{-1}\vn),
+    \label{eq:symbol-covariance}\\
+  \int_{S^2} W_A\dd\mu_j&=\tr A,
+    \label{eq:trace-normalization}\\
+  \int_{S^2}\overline{W_A}W_B\dd\mu_j&=\tr(A^\dagger B).
+    \label{eq:traciality}
+\end{align}
+\end{subequations}
+附录~\ref{app:kernel} 核验了式~\eqref{eq:kernel-north} 的核所对应的归一化和次数上界。
+
+\section{任意纯态的严格负性}
+
+\begin{lemma}[旋转正交性]\label{lem:orbit}
+对任意 \(\phi,\psi\in\mathcal H_j\)，存在 \(g\in\SU(2)\) 使
+\(\phi^\dagger U_j(g)\psi=0\)。
+\end{lemma}
+
+\begin{proof}
+任一向量为零时结论直接成立。群 \(U_j(\SU(2))\) 紧致且连通，
+并在维数为 \(d>1\) 的复空间 \(\mathcal H_j\) 上不可约地作用。
+由 Gichev 的推论 \cite[推论 1]{gichev2004}，
+\(\psi\) 的轨道与复超平面 \(\phi^\perp\) 相交。
+\end{proof}
+
+附录~\ref{app:orbit} 给出了自旋表示中该引理的两种直接证法。
+
+\begin{theorem}[纯态的严格负性]\label{thm:negative}
+对第~\ref{sec:kernel} 节中的每个自旋和每种核，以及每个单位向量
+\(\psi\in\mathcal H_j\)，投影 \(\rho=\psi\psi^\dagger\) 满足
+\begin{equation}
+  \min_{\vn\in S^2}W_\rho(\vn)<0 .
+  \label{eq:negative}
+\end{equation}
+\end{theorem}
+
+\begin{proof}
+在引理~\ref{lem:orbit} 中取 \(\phi=\psi\)，由所得旋转 \(g\) 定义
+\(\rho_g=U_j(g)\rho U_j(g)^\dagger\)。于是
+\begin{equation}
+  \tr(\rho\rho_g)=|\psi^\dagger U_j(g)\psi|^2=0 .
+  \label{eq:orthogonal-trace}
+\end{equation}
+假设 \(W_\rho\) 处处非负，由式~\eqref{eq:symbol-covariance} 可知
+\(W_{\rho_g}\) 也处处非负。两者都是积分为 \(1\) 的实解析函数。
+\(W_\rho\) 因而在某个非空开集上严格为正。
+若 \(W_{\rho_g}\) 在这个开集上恒为零，由连通球面上的实解析恒等定理，
+它将在整个球面上恒为零。故两函数的乘积在某个非空开集上严格为正，其积分为正。
+然而，由式~\eqref{eq:traciality} 和式~\eqref{eq:orthogonal-trace}，同一积分等于零。
+这个矛盾证明了式~\eqref{eq:negative}。最小值由球面的紧性和符号的连续性保证取得。
+\end{proof}
+
+当 \(j=0\) 时，希尔伯特空间为一维，核给出 \(W_\rho\equiv1\)。
+因此正自旋是定理的必要条件。
+
+\section{负性的显式统一下界}
+
+对归一化密度算符 \(\rho\)，定义其 Wigner 负性体积为
+\begin{equation}
+  \delta_j(\rho)
+  =\int_{S^2}\max\{-W_\rho,0\}\dd\mu_j
+  =\frac12\left(\int_{S^2}|W_\rho|\dd\mu_j-1\right).
+  \label{eq:negative-volume}
+\end{equation}
+此处使用文献 \cite[式 (14)]{davis2021} 的归一化。下面的估计控制两个球面多项式
+的绝对值乘积积分。
+
+\begin{lemma}[球面多项式的对数均值]\label{lem:log}
+设 \(F\) 是次数至多为 \(L\) 的实多项式在 \(S^2\) 上的限制，
+且 \(M=\max_{S^2}|F|>0\)。则 \(\log|F|\) 关于 \(\eta\) 可积。
+令 \(C=1+e^{-1}\)，有
+\begin{equation}
+  \int_{S^2}\log|F|\dd\eta\geq \log M-LC .
+  \label{eq:logmean}
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+约定 \(\log 0=-\infty\)。对任意 \(z\in\mathbb C\)，置 \(a=\operatorname{Re}z\)。
+当 \(0\leq s\leq1\) 时，有 \(|1-zs|\geq|1-as|\)。
+若 \(a\leq0\)，右侧至少为 \(1\)。若 \(0<a\leq1\)，右侧至少为 \(1-s\)，
+其对数的积分为 \(-1\)。当 \(a>1\) 时，直接积分得到
+\begin{equation}
+  \int_0^1\log|1-as|\dd s
+  =-1+\frac{(a-1)\log(a-1)}{a}\geq -C .
+  \label{eq:linear-log}
+\end{equation}
+最后一步用到 \(x\log x\geq-e^{-1}\) 对 \(x>0\) 成立。分子为负时，
+除以 \(a>1\) 只会增大它。
+把满足 \(Q(0)=1\) 的一元多项式 \(Q\) 分解为 \(1-zs\) 型因子，
+即得 \(\int_0^1\log|Q(s)|\dd s\geq-C\deg Q\)。
+
+取 \(\vn_0\) 使 \(|F(\vn_0)|=M\)。对垂直于 \(\vn_0\) 的单位向量 \(\vu\)，
+用以下两式参数化方向相反的经线。
+\begin{equation}
+  \vn_\pm(s,\vu)=(1-2s)\vn_0
+                    \pm 2\sqrt{s(1-s)}\,\vu,\qquad 0\leq s\leq1 .
+  \label{eq:meridians}
+\end{equation}
+若 \(P\) 是 \(F\) 的多项式延拓，则乘积
+\(P(x\vn_0+y\vu)P(x\vn_0-y\vu)\) 关于 \(y\) 为偶函数，总次数至多为 \(2L\)。
+代入 \(y^2=1-x^2\) 和 \(x=1-2s\)，可知
+\[
+  Q_{\vu}(s)=\frac{F(\vn_+(s,\vu))F(\vn_-(s,\vu))}{M^2}
+\]
+是次数至多为 \(2L\) 的一元多项式，且 \(Q_\vu(0)=1\)。
+
+令 \(\tau\) 为 \(\vu\) 所在单位圆上的均匀概率测度。
+因为 \(1-2s\) 是极角的余弦，\(\mathrm ds\,\mathrm d\tau\) 经
+式~\eqref{eq:meridians} 中任一映射的推前均为 \(\eta\)。
+由 \(|Q_\vu|\leq1\)，可对非负函数 \(-\log|Q_\vu|\) 使用 Tonelli 定理，得到
+\[
+  2\int_{S^2}\log\frac{|F|}{M}\dd\eta
+  =\int\!\int_0^1\log|Q_{\vu}(s)|\dd s\dd\tau(\vu)
+  \geq -2LC .
+\]
+有限的下界同时给出对数的可积性。
+\end{proof}
+
+\begin{theorem}[定量负性]\label{thm:bounds}
+在定理~\ref{thm:negative} 的假设下，有
+\begin{align}
+  \delta_j(\rho)
+  &\geq \frac{\sqrt{2j+1}}{4}\exp\bigl(-4(1+e^{-1})j\bigr),
+    \label{eq:volume-bound}\\
+  -\min_{S^2}W_\rho
+  &\geq \frac{1}{4\sqrt{2j+1}}\exp\bigl(-4(1+e^{-1})j\bigr).
+    \label{eq:depth-bound}
+\end{align}
+\end{theorem}
+
+\begin{proof}
+取 \(u=W_\rho\)，并对式~\eqref{eq:orthogonal-trace} 给出的正交旋转取
+\(v=W_{\rho_g}\)。两函数的上确界范数相同，记为 \(M\)。
+迹公式给出 \(\int uv\dd\mu_j=0\) 和 \(\int u^2\dd\mu_j=1\)。
+对两个符号分别应用引理~\ref{lem:log}，再对概率测度 \(\eta\) 应用 Jensen 不等式，得到
+\[
+  \int_{S^2}|uv|\dd\mu_j
+  \geq d\exp\left(\int_{S^2}(\log|u|+\log|v|)\dd\eta\right)
+  \geq d M^2 e^{-2LC}.
+\]
+令 \(u_\pm=\max\{\pm u,0\}\)，并按同样方式定义 \(v_\pm\)。
+乘积 \(uv\) 的负部为 \(u_+v_-+u_-v_+\)。
+由 \(uv\) 的积分为零，结合 \(\mu_j\) 的旋转不变性，有
+\[
+  \int_{S^2}|uv|\dd\mu_j
+  =2\int_{S^2}(u_+v_-+u_-v_+)\dd\mu_j
+  \leq 4M\delta_j(\rho).
+\]
+从而 \(\delta_j(\rho)\geq d M e^{-2LC}/4\)。
+再由 \(1=\int u^2\dd\mu_j\leq d M^2\)，得到式~\eqref{eq:volume-bound}。
+利用逐点估计 \(\max\{-W_\rho,0\}\leq-\min_{S^2}W_\rho\) 和
+\(\mu_j\) 的总质量 \(d\)，就得到式~\eqref{eq:depth-bound}。
+\end{proof}
+
+\paragraph{自旋 \(\tfrac12\) 的例子。}
+在全正符号约定下，自旋向上态的符号为
+\((1+\sqrt{3}\cos\theta)/2\) \cite[式 (16)]{davis2021}。
+每个单量子比特纯态都可以由它旋转得到。在负值球冠上积分，得到
+\[
+  \delta_{1/2}=\frac{1}{\sqrt{3}}-\frac12\approx0.07735,
+  \qquad
+  \frac{\sqrt{2}}4 e^{-2(1+e^{-1})}\approx0.02293 .
+\]
+两项分别为精确的负性体积和式~\eqref{eq:volume-bound} 给出的下界。
+
+\paragraph{AI 辅助说明。}
+ChatGPT 参与了证明探索、文献筛查和手稿整理。
+
+\appendix
+\section{球面核的归一化与多项式次数}
+\label{app:kernel}
+
+对 \(0\leq\ell\leq L\)，记
+\(C_\ell:\mathcal H_j\otimes\mathcal H_\ell\to\mathcal H_j\)
+为由系数 \(C_{jm,\ell q}^{jm'}\) 定义的 Clebsch--Gordan 耦合映射，
+其归一化满足 \(C_\ell C_\ell^\dagger=I\)。令
+\[
+  M_{\ell q}v=C_\ell(v\otimes|\ell,q\rangle),\qquad
+  T_{\ell q}=\sqrt{\frac{2\ell+1}{d}}\,M_{\ell q}.
+\]
+映射 \(|\ell,q\rangle\mapsto M_{\ell q}\) 把自旋 \(\ell\) 表示交织到
+算符的 \(U_j\) 共轭表示中。由 Schur 引理，不同 \(\ell\) 对应的像相互正交，
+同一 \(\ell\) 的 Hilbert--Schmidt Gram 矩阵为单位矩阵的标量倍数。
+由 \(C_\ell C_\ell^\dagger=I\) 可得
+\(\sum_q M_{\ell q}M_{\ell q}^\dagger=I\)。取迹可知该标量为 \(d/(2\ell+1)\)。
+因此 \(T_{\ell q}\) 构成算符空间的一组正交归一基，其数目为 \(d^2\)，
+其中 \(T_{00}=I/\sqrt d\)。
+
+设 \(Y_{\ell q}\) 为关于 \(\mathrm d\omega\) 正交归一的球谐函数。
+球面核的协变展开为 \cite[式 (A1)--(A2)]{davis2021}
+\begin{equation}
+  \Delta_j(\vn)=\sqrt{\frac{4\pi}{d}}\sum_{\ell=0}^{L}
+  \varepsilon_\ell\sum_{q=-\ell}^{\ell}
+    \overline{Y_{\ell q}(\vn)}\,T_{\ell q}.
+  \label{eq:expansion}
+\end{equation}
+每个符号因子作用于整个 \(\ell\) 阶分量。北极处仅 \(q=0\) 项有贡献，
+且 \(Y_{\ell0}(\mathbf e_z)=\sqrt{(2\ell+1)/(4\pi)}\)，代入即得
+式~\eqref{eq:kernel-north}。
+
+符号的协变性来自核的协变性与迹的循环性。对式~\eqref{eq:expansion} 取伴随，
+利用核的厄米性，可将符号写为
+\[
+  W_A=\sqrt{\frac{4\pi}{d}}
+      \sum_{\ell,q}\varepsilon_\ell
+           \tr(T_{\ell q}^\dagger A)\,Y_{\ell q}.
+\]
+由 \(Y_{00}=1/\sqrt{4\pi}\) 和 \(\varepsilon_0=1\) 得到
+式~\eqref{eq:trace-normalization}。由 Parseval 恒等式和
+\(\varepsilon_\ell^2=1\) 得到式~\eqref{eq:traciality}。
+每个 \(Y_{\ell q}\) 都是 \(\ell\) 次齐次调和多项式在球面上的限制。
+当 \(A\) 为厄米算符时，\(W_A\) 为实值，取多项式延拓的实部即可。
+
+\section{旋转正交性的两个直接证明}
+\label{app:orbit}
+
+以下给出引理~\ref{lem:orbit} 在自旋表示中的两种直接证法。
+记 \(\nu\) 为 \(G=\SU(2)\) 上的归一化 Haar 测度，
+令 \(f(g)=\phi^\dagger U_j(g)\psi\)。
+假如 \(f\) 处处非零，由 \(G\simeq S^3\) 的单连通性和圆周的覆盖映射
+\(t\mapsto e^{it}\)，存在定义在全群上的光滑实相位 \(\theta\)，使
+\(f=r e^{i\theta}\)，其中 \(r=|f|>0\)。
+
+\subsection{Casimir 算符与相位}
+
+记 \(\sigma_k\) 为 Pauli 矩阵，\(J_k\) 为对应的自旋 \(j\) 生成元。
+对光滑函数 \(h\)，定义
+\[
+  X_kh(g)=\left.\frac{\mathrm d}{\mathrm dt}
+     h\bigl(g\exp(-it\sigma_k/2)\bigr)\right|_{t=0},
+  \qquad \mathcal L=\sum_{k=1}^3X_k^2.
+\]
+三个向量场在每一点张成切空间。Haar 右不变性给出
+\(\int_G X_kh\dd\nu=0\)。由自旋 Casimir 恒等式
+\(\sum_k J_k^2=j(j+1)I\)，有 \(\mathcal L f=-j(j+1)f\)，积分即得
+\(\int_G f\dd\nu=0\)。同时，
+\[
+  \sum_k X_k(r^2X_k\theta)
+  =\operatorname{Im}\bigl(\overline f\,\mathcal L f\bigr)=0 .
+\]
+第一等号用到 \(\operatorname{Im}(\overline f X_k f)=r^2X_k\theta\)，
+且 \((X_k\overline f)(X_k f)\) 为实数。乘以 \(\theta\) 并分部积分，得到
+\[
+  \int_G r^2\sum_k(X_k\theta)^2\dd\nu=0 .
+\]
+由于 Haar 测度的支撑是全群且 \(r>0\)，每个 \(X_k\theta\) 都处处为零。
+由 \(G\) 的连通性，\(\theta\) 为常数。此时 \(f\) 的平均值是恒定相位乘以
+一个严格正数，与零均值矛盾。
+
+\subsection{Schur 平均}
+
+记 \(b=\max_G\theta\)，取任一最大点 \(g_0\)。当 \(\epsilon>0\) 足够小时，
+邻域 \(V=\{h\in G:\|h-I\|_{\mathrm{HS}}<\epsilon\}\) 满足
+\(b-\pi<\theta(g_0h)\leq b\) 对每个 \(h\in V\) 成立。
+\(V\) 的共轭不变性保证 \(\int_V U_j(h)\dd\nu(h)\) 与整个表示对易。
+由 Schur 引理，该积分为 \(c_V I\)。又因 \(V\) 在取逆下不变，积分为厄米算符，
+所以 \(c_V\) 为实数。因此
+\[
+  \int_V\operatorname{Im}\bigl(e^{-ib}f(g_0h)\bigr)\dd\nu(h)
+  =\operatorname{Im}\bigl(c_V e^{-ib}f(g_0)\bigr)=0 .
+\]
+被积函数在 \(V\) 上连续且非正，故在 \(V\) 上处处为零。
+由 \(r>0\) 和相位范围可得 \(\theta=b\) 在 \(g_0V\) 上成立。
+最大点集既开又闭，因而 \(\theta\) 为常数。对 \(U_j\) 作全群平均得到
+到不变向量空间的投影。由于 \(j>0\)，该投影为零，
+从而 \(\int_G f\dd\nu=0\)，仍与 \(f=r e^{ib}\) 且 \(r>0\) 矛盾。
+
+\clearpage
+\begin{thebibliography}{9}
+\small
+\raggedright
+\setlength{\itemsep}{3pt}
+
+\bibitem{varilly1989}
+J.~C. V\'arilly and J.~M. Gracia-Bond\'ia,
+\emph{The Moyal representation for spin},
+Ann. Phys. \textbf{190}, 107--148 (1989).
+\href{https://doi.org/10.1016/0003-4916(89)90262-5}{DOI}.
+
+\bibitem{davis2021}
+J.~Davis, M.~Kumari, R.~B. Mann, and S.~Ghose,
+\emph{Wigner negativity in spin-\(j\) systems},
+Phys. Rev. Research \textbf{3}, 033134 (2021).
+\href{https://doi.org/10.1103/PhysRevResearch.3.033134}{DOI}.
+
+\bibitem{davis2023}
+J.~Davis, R.~A. Hennigar, R.~B. Mann, and S.~Ghose,
+\emph{Stellar representation of extremal Wigner-negative spin states},
+J. Phys. A \textbf{56}, 265302 (2023).
+\href{https://doi.org/10.1088/1751-8121/acd918}{DOI}.
+
+\bibitem{denis2025}
+J.~Denis, \emph{Bridging Concepts of Quantumness: Phase-space,
+Entanglement and Anticoherence in Spin Systems},
+Ph.D. thesis, Universit\'e de Li\`ege (2025).
+\href{https://hdl.handle.net/2268/336540}{学位论文}.
+
+\bibitem{kam2026}
+C.-F. Kam, \emph{Hudson's theorem fails for the \(\SU(1,1)\)
+discrete series} (2026).
+\href{https://arxiv.org/abs/2609.07242}{\mbox{arXiv:2609.07242}}.
+
+\bibitem{f18}
+J.-P. Bruneton (ed.), \emph{Open Problems in Quantum Mechanics
+for AI Agents}, problem F18（2026 年 11 月 24 日访问）.
+\href{https://openquantumproblems.com/p/F18}{目录条目}.
+
+\bibitem{gichev2004}
+V.~M. Gichev, \emph{A note on common zeroes of Laplace--Beltrami
+eigenfunctions}, Ann. Global Anal. Geom. \textbf{26}, 201--208 (2004).
+\href{https://arxiv.org/abs/math/0511688}{\mbox{arXiv:math/0511688}}.
+
+\end{thebibliography}
+\end{document}
